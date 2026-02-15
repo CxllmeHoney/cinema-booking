@@ -121,6 +121,12 @@ Payment Gateway:
 Implementation: จำลองการชำระเงิน ด้วยการกด Confirm
 เหตุผล : เพื่อโฟกัสที่ Concurrency Logic และ System Design เป็นหลัก
 ```
+## วิธีรันเทสต์ผ่าน Docker
+ใน Terminal Docker ให้พิมพ์คำสั่งนี้:
+```
+docker compose exec backend go test -v
+```
+หมายเหตุ: ต้องแน่ใจว่าโปรเจกต์กำลังรันอยู่นะครับ
 
 ## Project Structure
 ``````

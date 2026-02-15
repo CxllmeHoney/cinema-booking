@@ -24,7 +24,6 @@ var rdb *redis.Client
 var mongoCollection *mongo.Collection
 var auditCollection *mongo.Collection
 
-// Helper อ่าน Env
 func getEnv(key, fallback string) string {
 	if value, exists := os.LookupEnv(key); exists {
 		return value
