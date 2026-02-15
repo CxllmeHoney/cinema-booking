@@ -22,14 +22,11 @@ const adminLogs = ref([]);
 const filterUserID = ref('');
 const filterEvent = ref('');
 
-// ตัวแปรเก็บที่นั่งทั้งหมด
 const seats = ref([]);
 
-// 🌟 ฟังก์ชันสร้างที่นั่งอัตโนมัติตาม Layout จริงของโรงหนัง
 const generateSeats = () => {
   const newSeats = [];
   
-  // โซนบนสุด (เต็มความกว้าง แถวละ 24 ที่นั่ง)
   const rows24 = ['K', 'J', 'I', 'H', 'G', 'F', 'E', 'D'];
   rows24.forEach(row => {
     for(let i = 1; i <= 24; i++) {
@@ -37,7 +34,6 @@ const generateSeats = () => {
     }
   });
 
-  // โซนด้านหน้า (เว้นที่ว่างด้านข้าง แถวละ 20 ที่นั่ง)
   const rows20 = ['C', 'B', 'A'];
   rows20.forEach(row => {
     for(let i = 1; i <= 20; i++) {
@@ -45,7 +41,6 @@ const generateSeats = () => {
     }
   });
 
-  // โซน VIP ด้านหลังสุด (10 ที่นั่ง เป็นคู่)
   for(let i = 1; i <= 10; i++) {
     newSeats.push({ id: `VP${i}`, status: 'available', row: 'VP', type: 'vip' });
   }
@@ -53,9 +48,8 @@ const generateSeats = () => {
   seats.value = newSeats;
 };
 
-generateSeats(); // เรียกสร้างที่นั่งตอนเริ่มต้น
+generateSeats();
 
-// จัดกลุ่มที่นั่งแยกตามแถว เพื่อนำไป Loop สร้าง Layout
 const seatRows = computed(() => {
   const rowLabels = ['K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A', 'VP'];
   return rowLabels.map(label => ({
@@ -65,7 +59,6 @@ const seatRows = computed(() => {
 });
 
 onMounted(async () => {
-  // 🌟 เพิ่มโค้ดส่วนนี้: ให้ Firebase เช็คว่าเคยล็อกอินค้างไว้ไหม
   onAuthStateChanged(auth, (user) => {
     if (user) {
       currentUser.value = user; // ถ้ามีประวัติล็อกอิน ให้จำค่า User ไว้เลย
@@ -74,7 +67,6 @@ onMounted(async () => {
     }
   });
 
-  // โค้ด WebSocket และ fetchSeats ของเดิม (ปล่อยไว้เหมือนเดิมครับ)
   const ws = new WebSocket("ws://localhost:8080/ws");
   ws.onmessage = (event) => {
     const data = JSON.parse(event.data);
@@ -167,7 +159,7 @@ const loadAdminDashboard = async () => {
   <div class="cinema-wrapper">
     <header class="top-nav">
       <div class="nav-left">
-        <h1 class="main-title"><span class="icon">🎬</span> SF / Major Booking</h1>
+        <h1 class="main-title"><span class="icon">🎬</span>Cinema-Booking</h1>
       </div>
 
       <div class="nav-right">
@@ -302,7 +294,7 @@ const loadAdminDashboard = async () => {
 html, body {
   margin: 0;
   padding: 0;
-  background-color: #000000; /* เปลี่ยนพื้นหลังเป็นสีดำสนิทตามเรฟ */
+  background-color: #000000; 
 }
 #app {
   max-width: 100% !important;
@@ -313,7 +305,6 @@ html, body {
 </style>
 
 <style scoped>
-/* --- Global --- */
 .cinema-wrapper {
   background-color: #000000;
   color: #f8fafc;
@@ -379,12 +370,11 @@ html, body {
   background: #cbd5e1; filter: blur(40px); opacity: 0.1; z-index: 1;
 }
 
-/* 🌟 --- Cinema Layout (New Layout Engine) --- */
 .cinema-layout {
   display: flex;
   flex-direction: column;
-  gap: 12px; /* ช่องไฟระหว่างแถวบนลงล่าง */
-  overflow-x: auto; /* ทำให้เลื่อนได้ถ้าจอเล็ก */
+  gap: 12px;
+  overflow-x: auto;
   padding-bottom: 20px;
   align-items: center;
 }
@@ -392,7 +382,7 @@ html, body {
 .seat-row-wrapper {
   display: flex;
   align-items: center;
-  gap: 15px; /* ระยะห่างระหว่างตัวหนังสือแถวกับเก้าอี้ */
+  gap: 15px; 
 }
 
 .row-label {
@@ -406,13 +396,12 @@ html, body {
 
 .seats-row {
   display: flex;
-  gap: 8px; /* ช่องไฟระหว่างเก้าอี้แนวนอน (แถวปกติ) */
+  gap: 8px; 
 }
 
-/* ตั้งค่าให้แถว VP ชิดกันเป็นคู่ๆ */
 .seats-row.is-vp {
   gap: 0;
-  margin-top: 15px; /* ห่างจากแถว A เพิ่มขึ้นหน่อย */
+  margin-top: 15px; 
 }
 
 /* --- Seat Button & Icons --- */
@@ -439,26 +428,24 @@ html, body {
   height: 100%;
 }
 
-/* สีเก้าอี้ตามสถานะ */
-.seat-btn.available.normal .icon-svg.chair { color: #b91c1c; } /* สีแดงที่นั่งปกติ */
-.seat-btn.available.vip .icon-svg.chair { color: #be185d; } /* สีม่วงอมชมพูที่นั่ง VIP */
+.seat-btn.available.normal .icon-svg.chair { color: #b91c1c; } 
+.seat-btn.available.vip .icon-svg.chair { color: #be185d; } 
 
 .seat-btn.locked .icon-svg.locked { 
-  color: #f59e0b; /* สีส้มคนกำลังจอง */
+  color: #f59e0b;
   animation: pulse 1s infinite alternate; 
 }
 
 .seat-btn.booked .icon-svg.booked { 
-  color: #64748b; /* สีเทารูปคนจองแล้ว */
+  color: #64748b; 
   cursor: not-allowed;
 }
 
-/* การเว้นช่องไฟคู่สำหรับแถว VP */
 .seat-btn.vip {
   margin-right: 8px;
 }
 .seat-btn.vip:nth-child(2n) {
-  margin-right: 40px; /* เว้นระยะตรงกลางให้เป็นคู่ๆ */
+  margin-right: 40px; 
 }
 .seat-btn.vip:last-child {
   margin-right: 0;
@@ -469,7 +456,6 @@ html, body {
   100% { transform: scale(1.15); opacity: 1; text-shadow: 0 0 10px #f59e0b; }
 }
 
-/* --- Legend --- */
 .legend {
   display: flex; justify-content: center; gap: 25px; flex-wrap: wrap;
   margin-top: 40px; padding: 15px; border-radius: 12px;
