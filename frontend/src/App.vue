@@ -4,12 +4,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCjdcifmwfImx4XEXQlySuHuzEFda56D8o",
-  authDomain: "cinema-booking-a46d3.firebaseapp.com",
-  projectId: "cinema-booking-a46d3",
-  storageBucket: "cinema-booking-a46d3.firebasestorage.app",
-  messagingSenderId: "683612178493",
-  appId: "1:683612178493:web:025026d3e671d392620254"
+  apiKey: " ",
+  authDomain: " ",
+  projectId: " ",
+  storageBucket: " ",
+  messagingSenderId: " ",
+  appId: " "
 };
 
 const app = initializeApp(firebaseConfig);
